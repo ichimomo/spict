@@ -411,12 +411,12 @@ invlogp1 <- function(a) 1 + exp(a)
 #' @param all.return If true also return a guess on Emsy (effort at MSY) and components of the linear regression.
 #' @return The guess on MSY.
 #' @export
-guess.m <- function(inp, all.return=FALSE){
+guess.m <- function(inp, all.return=FALSE, ncpue=1){
     meancatch <- mean(unlist(inp$obsC))
     flag <- FALSE
     if ('obsI' %in% names(inp)){
         if (length(inp$obsI) > 0){
-            out <- get.catchindexoverlap(inp)
+            out <- get.catchindexoverlap(inp, ncpue=ncpue)
             if (!is.null(out)){
                 ty <- out$ty
                 y <- out$y
@@ -454,14 +454,14 @@ guess.m <- function(inp, all.return=FALSE){
 #' @param inp An input list containing data.
 #' @return List containing overlapping catch (y) and index (z) observations and their time vectors.
 #' @export
-get.catchindexoverlap <- function(inp){
+get.catchindexoverlap <- function(inp, ncpue = 1){
     y <- inp$obsC
     ty <- inp$timeC
     if (length(inp$obsI) > 0 & inp$nseasons == 1){
         # Get index observations
         if (class(inp$obsI)=='list'){
-            z <- inp$obsI[[1]]
-            tz <- inp$timeI[[1]]
+            z <- inp$obsI[[ncpue]]
+            tz <- inp$timeI[[ncpue]]
         } else {
             z <- inp$obsI
             tz <- inp$timeI
