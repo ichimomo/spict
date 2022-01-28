@@ -66,10 +66,10 @@ retro <- function(rep, nretroyear=5, reduce_output_size = TRUE, mc.cores = 1){
         inpall[[i]]$getJointPrecision <- !reduce_output_size
         inpall[[i]] <- check.inp(inpall[[i]])
     }
-    asd <- try(parallel::mclapply(inpall, fit.spict,
+    asd <- try(parallel::mclapply(inpall, fit.spict_tol, out="res", ntrials=5,
                                   mc.cores = mc.cores))
     if (class(asd) == "try-error") {
-        rep$retro <- lapply(inpall, fit.spict)
+        rep$retro <- lapply(inpall, fit.spict_tol, out="res", ntrials=5)
     }
     else {
         rep$retro <- asd

@@ -2709,15 +2709,15 @@ plotspict.retro.fixed <- function(rep, CI = 0.95) {
 #' @param stamp Stamp plot with this character string.
 #' @return Nothing
 #' @export
-plotspict.ci <- function(inp, stamp=get.version()){
+plotspict.ci <- function(inp, stamp=get.version(), ncpue=1){
     #op <- par()
     inp <- check.inp(inp)
     if (sum(inp$nobsI) > 0){
         # Remove effort observations as they are not used in this plot
         inp$obsE <- NULL
         inp$timeE <- NULL
-        c <- guess.m(inp, all.return=TRUE)
-        out <- get.catchindexoverlap(inp)
+        c <- guess.m(inp, all.return=TRUE, ncpue=ncpue)
+        out <- get.catchindexoverlap(inp, ncpue=ncpue)
         time <- out$ty
         y <- out$y
         z <- out$z
@@ -2767,7 +2767,7 @@ plotspict.ci <- function(inp, stamp=get.version()){
         }
         if (class(c) == 'list' & inp$nseasons == 1){
             
-            plot.col(time,z,ylab="Catch/Index (E, effort proxy)",xlab="Year")
+            plot.col(time,z,ylab="Catch/Index (E, effort proxy)",xlab="Year", main="Catch/Index (E, effort proxy)")
             #
             plot(x, z, typ='l', xlim=xlim, ylab='Index', xlab='Catch/Index (E, effort proxy)',
                  main=paste('R-squared:', round(summary(mod0)$r.squared, 3)), ylim=range(0, a, z))

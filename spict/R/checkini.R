@@ -25,6 +25,7 @@
 #' @export
 check.ini <- function(input, ntrials=10, verbose=TRUE, numdigits=2){
     nd <- numdigits
+    inpsens_list <- list()
     if ('par.fixed' %in% names(input)){
         rep <- input
         inp <- rep$inp
@@ -78,6 +79,7 @@ check.ini <- function(input, ntrials=10, verbose=TRUE, numdigits=2){
             }
             inidist[i] <- calc.dist(inimat[i, ], inibasevec)
             inpsens$osar.method <- "none"
+            inpsens_list[[i]] <- inpsens
             repsens <- try(fit.spict(inpsens))
             if (class(repsens) != 'try-error' & 'opt' %in% names(repsens)){
                 if (repsens$opt$convergence == 0){
@@ -111,6 +113,7 @@ check.ini <- function(input, ntrials=10, verbose=TRUE, numdigits=2){
         if (verbose) {
           print(input$check.ini)
         }
+        input$inpsens_list <- inpsens_list
         return(input)
     }
 }
