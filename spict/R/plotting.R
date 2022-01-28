@@ -2767,7 +2767,7 @@ plotspict.ci <- function(inp, stamp=get.version(), ncpue=1){
         }
         if (class(c) == 'list' & inp$nseasons == 1){
             
-            plot.col(time,z,ylab="Catch/Index (E, effort proxy)",xlab="Year")
+            plot.col(time,z,ylab="Catch/Index (E, effort proxy)",xlab="Year", main="Catch/Index (E, effort proxy)")
             #
             plot(x, z, typ='l', xlim=xlim, ylab='Index', xlab='Catch/Index (E, effort proxy)',
                  main=paste('R-squared:', round(summary(mod0)$r.squared, 3)), ylim=range(0, a, z))
