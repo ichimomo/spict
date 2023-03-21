@@ -277,7 +277,7 @@ get.par <- function(parname, rep=rep, exp=FALSE, random=FALSE, fixed=FALSE, CI =
         }
         if (exp==TRUE){
             # This is the CV of a log-normally distributed random variable
-            # see https://en.wikipedia.org/wiki/Log-normal_distribution
+            # see https:/ /en.wikipedia.org/wiki/Log-normal_distribution
             cv <- sqrt(exp(sd^2) - 1)
             ll <- exp(ll)
             ul <- exp(ul)
@@ -649,9 +649,10 @@ calc.om <- function(rep, CI = 0.95){
 #'
 #' ## Keep years until 1985
 #' shorten.inp(inp, maxtime = 1985)
-#'
+#' \dontrun{
 #' ## Empty data set gives an error
 #' shorten.inp(inp, mintime = 1910, maxtime = 1930)
+#' }
 #' @export
 shorten.inp <- function(inp, mintime = NULL, maxtime = NULL){
     inpin <- check.inp(inp)
@@ -725,6 +726,8 @@ shorten.inp <- function(inp, mintime = NULL, maxtime = NULL){
         inpout$dtprede <- NULL
         inpout$manstart <- NULL
         inpout$timepredi <- NULL
+        inpout$lastCatchObs <- NULL
+        inpout$timerangeObs <- NULL
     }
 
     ## placeholder to create time vector
@@ -814,6 +817,7 @@ shorten.inp <- function(inp, mintime = NULL, maxtime = NULL){
         inpout$true$MSYvec <- inpout$true$MSYvec[inpin$time %in% inpout$time]
         inpout$true$Fmsyvec <- inpout$true$Fmsyvec[inpin$time %in% inpout$time]
     }
+    inpout$timerangeObs <- NULL
     inpChecked <- check.inp(inpout, verbose = FALSE)
     inpChecked <- check.man.time(inpChecked, verbose = FALSE, printTimeline = FALSE)
     return(inpChecked)
@@ -945,4 +949,17 @@ retape.spict <- function(rep, inp, verbose = FALSE, dbg = 0, mancheck=TRUE){
         class(repout) <- "spictcls"
     }
     return(repout)
+}
+
+
+##' @name prune.baserun
+##' @title Prune a fitted spict object to the core elements
+##' @param rep Result of fit.spict().
+##' @return Fitted spict core object.
+prune.baserun <- function(rep){
+    rep$cov <- NA
+    rep$man <- NULL
+    rep$retro <- NULL
+    rep$hindcast <- NULL
+    return(rep)
 }

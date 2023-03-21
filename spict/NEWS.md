@@ -1,3 +1,24 @@
+spict v1.3.7 (2022-09-06)
+============
+
+New features
+
+* Added functionality for performing and plotting hindcast analysis 
+  introducing the functions `hindcast()` and `plotspict.hindcast`.
+
+Bug fixes:
+
+* fixed retro when last year's observations where missing
+
+spict v1.3.6 (2022-06-06)
+============
+
+Bug fixes:
+
+* `sim.spict` saves the dtc (and dte) (closes #159)
+* Fixed optimisation of absolute catch management scenario
+* Fixed plotting of simulated data
+
 spict v1.3.5 (2021-09-09)
 ============
 
